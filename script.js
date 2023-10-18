@@ -40,3 +40,26 @@ btnScroll.addEventListener('click', function () {
   // or
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+// const links = document.querySelectorAll('.nav__link');
+// console.log(links);
+
+// links.forEach(function (link) {
+//   const id = link.getAttribute('href');
+//   console.log(id);
+//   link.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+// Delegation
+const nav = document.querySelector('nav');
+nav.addEventListener('click', function (e) {
+  e.preventDefault();
+  const clicked = e.target;
+  if (e.target.classList.contains('nav__link')) {
+    const id = clicked.getAttribute('href');
+    console.log(id);
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
