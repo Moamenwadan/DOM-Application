@@ -25,3 +25,18 @@ btnOPenModal.addEventListener('click', openModal);
 btnCloseModal.addEventListener('click', closeModal);
 
 // smooth scrolling
+const btnScroll = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+console.log(section1);
+
+btnScroll.addEventListener('click', function () {
+  const sc1oolds = section1.getBoundingClientRect();
+  console.log(sc1oolds);
+  //   window.scrollTo({
+  //     left: sc1oolds.left + window.pageXOffset,
+  //     top: sc1oolds.top + window.pageYOffset,
+  //     behavior: 'smooth',
+  //   });
+  // or
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
