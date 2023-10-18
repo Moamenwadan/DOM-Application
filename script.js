@@ -83,3 +83,36 @@ tabContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+const links = document.querySelectorAll('.nav__link');
+const logo = document.querySelector('.nav__logo');
+// nav.addEventListener('mouseover', function (e) {
+//   if (e.target.classList.contains('nav__link')) {
+//     const clicked = e.target;
+//     links.forEach(li => {
+//       if (li !== clicked) li.style.opacity = 0.5;
+//     });
+//     logo.style.opacity = 0.5;
+//   }
+// });
+// nav.addEventListener('mouseout', function (e) {
+//   if (e.target.classList.contains('nav__link')) {
+//     const clicked = e.target;
+//     links.forEach(li => {
+//       if (li !== clicked) li.style.opacity = 1;
+//     });
+//     logo.style.opacity = 1;
+//   }
+// });
+
+const handelHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const clicked = e.target;
+    links.forEach(li => {
+      if (li !== clicked) li.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+
+nav.addEventListener('mouseover', handelHover.bind(0.5));
+nav.addEventListener('mouseout', handelHover.bind(1));
