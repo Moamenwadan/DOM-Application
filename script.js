@@ -166,9 +166,117 @@ const lazy = function (entries, observe) {
 };
 const observeLazyImg = new IntersectionObserver(lazy, {
   root: null,
-  threshold: 0.15,
+  threshold: 0.1,
 });
-const allLazyImgs = document.querySelectorAll('img[data-src]');
-allLazyImgs.forEach(img => {
+const imgTargets = document.querySelectorAll('img[data-src]');
+imgTargets.forEach(img => {
   observeLazyImg.observe(img);
 });
+// building a slider component  **********************
+const sliderr = function () {
+  const slides = document.querySelectorAll('.slide');
+  const btnRight = document.querySelector('.slider__btn--right');
+  console.log(btnRight);
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const slider = document.querySelector('.slider');
+  const dotContainer = document.querySelector('.dots');
+  // slider.style.transform = `scale(.4) translateX(-800px)`;
+  // slider.style.overflow = 'visible';
+
+  let curSlide = 0;
+  let maxSlide = slides.length;
+  console.log(maxSlide);
+  // slides.forEach((s, i) => {
+  //   s.style.transform = `translateX(${100 * i}%)`;
+  // });
+  const createDot = function () {
+    slides.forEach((_, i) => {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
+    });
+  };
+  // createDot();
+  const activeDots = function (slide) {
+    document.querySelectorAll('.dots__dot').forEach((dot, i) => {
+      dot.classList.remove('dots__dot--active');
+    });
+    document
+      .querySelector(`.dots__dot[data-slide = "${slide}"]`)
+      .classList.add('dots__dot--active');
+  };
+  // activeDots(0);
+  let goToSlide = function (slide) {
+    slides.forEach((s, i) => {
+      s.style.transform = `translateX(${100 * (i - slide)}%)`;
+    });
+  };
+  // goToSlide(0);
+
+  const nextSlide = function () {
+    if (curSlide === maxSlide - 1) {
+      curSlide = 0;
+    } else {
+      curSlide++;
+    }
+    goToSlide(curSlide);
+    activeDots(curSlide);
+  };
+  const prevSlide = function () {
+    if (curSlide === 0) {
+      curSlide = maxSlide - 1;
+    } else {
+      curSlide--;
+    }
+    goToSlide(curSlide);
+    activeDots(curSlide);
+  };
+  const intial = function () {
+    goToSlide(0);
+    createDot();
+    activeDots(0);
+  };
+  intial();
+  btnRight.addEventListener('click', nextSlide);
+  btnLeft.addEventListener('click', prevSlide);
+  // btnRight.addEventListener('click', function () {
+  //   if (curSlide === maxSlide - 1) {
+  //     curSlide = 0;
+  //   } else {
+  //     curSlide++;
+  //   }
+
+  //   slides.forEach((s, i) => {
+  //     s.style.transform = `translateX(${100 * (i - curSlide)}%`;
+  //   });
+  // });
+
+  // btnLeft.addEventListener('click', function () {
+  //   if (curSlide === 0) {
+  //     curSlide = maxSlide - 1;
+  //   } else {
+  //     curSlide--;
+  //   }
+
+  //   slides.forEach((s, i) => {
+  //     s.style.transform = `translateX(${100 * (i - curSlide)}%`;
+  //   });
+  // });
+
+  // building a slider component part 2  ****************************************************
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') nextSlide();
+  });
+
+  dotContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('dots__dot')) {
+      const slide = e.target.dataset.slide;
+      goToSlide(slide);
+      activeDots(slide);
+    }
+  });
+};
+sliderr();
